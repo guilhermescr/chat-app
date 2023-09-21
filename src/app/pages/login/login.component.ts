@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ChatService } from 'src/app/shared/services/chat.service';
 
 @Component({
   selector: 'app-login',

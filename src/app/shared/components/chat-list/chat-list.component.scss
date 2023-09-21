@@ -1,0 +1,54 @@
+@use "../../../../assets/utilities/mixins";
+
+:host {
+  section {
+    max-width: 600px;
+    width: 100%;
+    
+    ul {
+      border: 1px solid #ccc;
+
+      li {
+        background-color: #f8f3f3;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+        @include mixins.flex-center;
+        gap: 10px;
+        justify-content: space-between;
+        padding: 20px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+
+        &:active {
+          filter: brightness(0.95);
+        }
+
+        .user-profile-picture-container {
+          max-width: 50px;
+
+          .user-profile-picture-container__picture {
+            width: 100%;
+          }
+        }
+
+        .user-data {
+          width: 70%;
+
+          h2 {
+            font-size: 18px;
+          }
+
+          p {
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+  }
+}
