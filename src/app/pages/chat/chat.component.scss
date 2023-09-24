@@ -1,17 +1,41 @@
+@use "../../../assets/utilities/mixins";
+
 :host {
   main {
     display: grid;
     grid-template-columns: 280px 1fr;
+    min-height: 100vh;
 
     > section {
       background-color: #efefef;
       border: 1px solid #aaa;
       border-radius: 10px;
+      @include mixins.flex-center(column);
+      width: 100%;
+
+      > * {
+        width: 100%;
+      }
+
+      .empty-chat {
+        @include mixins.flex-center(column);
+        gap: 15px;
+        padding: 20px;
+
+        h2 {
+          text-align: center;
+        }
+
+        img {
+          max-width: 150px;
+        }
+      }
 
       .chat-messages {
         display: flex;
         flex-direction: column;
         gap: 15px;
+        margin-bottom: auto;
         padding: 20px;
 
         .message {

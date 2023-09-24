@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Message } from 'src/app/shared/models/message.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ChatService } from 'src/app/shared/services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -8,33 +10,32 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class ChatComponent {
   username: string = '';
-  messages = [
-    {
-      author: 'jão',
-      messageText: 'Hello! How are you doing?',
-    },
-    {
-      author: 'gui',
-      messageText: "Hey! I'm doing well. Let's head the streets tomorrow?",
-    },
-    {
-      author: 'jão',
-      messageText: 'Sure. See you there!',
-    },
-  ];
+  isChatOpen: boolean = false;
+  messages: Message[] = [];
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private chatService: ChatService
+  ) {
     this.authService.user.subscribe((userName) => {
       if (userName) {
         this.username = userName;
       }
     });
+
+    this.chatService.globalChatRef
+      .valueChanges()
+      .subscribe((messagesData) => (this.messages = messagesData));
   }
 
   addNewMessage(newMessage: string): void {
-    this.messages.push({
+    this.chatService.addMessageToGlobalChat({
       author: this.username,
       messageText: newMessage,
     });
+  }
+
+  toggleChatView(): void {
+    this.isChatOpen = !this.isChatOpen;
   }
 }

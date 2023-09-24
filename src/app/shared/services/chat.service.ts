@@ -4,6 +4,7 @@ import {
   AngularFireList,
 } from '@angular/fire/compat/database';
 import { User } from '../models/user.model';
+import { Message } from '../models/message.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +12,19 @@ import { User } from '../models/user.model';
 export class ChatService {
   private dbPath = '/users';
   private globalChatPath = '/global';
-  tasksRef: AngularFireList<User>;
+  usersRef: AngularFireList<User>;
+  globalChatRef: AngularFireList<Message>;
 
   constructor(private fbDb: AngularFireDatabase) {
-    this.tasksRef = fbDb.list(this.dbPath);
+    this.usersRef = fbDb.list(this.dbPath);
+    this.globalChatRef = fbDb.list(this.globalChatPath);
   }
 
   registerNewUser(username: string): void {
-    this.tasksRef.push({ username, isOnline: true, messages: [] });
+    this.usersRef.push({ username, isOnline: true, messages: [] });
+  }
+
+  addMessageToGlobalChat(message: Message): void {
+    this.globalChatRef.push(message);
   }
 }

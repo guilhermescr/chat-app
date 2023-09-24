@@ -1,19 +1,30 @@
 <main>
-  <app-chat-list></app-chat-list>
+  <app-chat-list (toggleChatViewEvent)="toggleChatView()"></app-chat-list>
 
   <section>
-    <section class="chat-messages">
-      <article
-        *ngFor="let message of messages"
-        class="message"
-        [ngClass]="
-          username === message.author ? 'host-message' : 'friend-message'
-        "
-      >
-        {{ message.messageText }}
-      </article>
-    </section>
+    <div *ngIf="!isChatOpen; else showChatMessages" class="empty-chat">
+      <h2>Open a chat to start a conversation!</h2>
 
-    <app-chat-box (addNewMessageEvent)="addNewMessage($event)"></app-chat-box>
+      <img
+        src="../../../assets/img/chat/chat-balloon.png"
+        alt="Chat Balloon Icon"
+      />
+    </div>
+
+    <ng-template #showChatMessages>
+      <section class="chat-messages">
+        <article
+          *ngFor="let message of messages"
+          class="message"
+          [ngClass]="
+            username === message.author ? 'host-message' : 'friend-message'
+          "
+        >
+          {{ message.messageText }}
+        </article>
+      </section>
+
+      <app-chat-box (addNewMessageEvent)="addNewMessage($event)"></app-chat-box>
+    </ng-template>
   </section>
 </main>
