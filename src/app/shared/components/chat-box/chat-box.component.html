@@ -1,5 +1,12 @@
 <section>
-  <textarea name="" id=""></textarea>
+  <textarea
+    name=""
+    id=""
+    placeholder="Your message..."
+    [(ngModel)]="messageText"
+  ></textarea>
 
-  <button class="send-button">Send</button>
+  <button class="send-button" (click)="handleSubmit()">
+    <img src="../../../../assets/icons/send.svg" alt="Send Icon" />
+  </button>
 </section>

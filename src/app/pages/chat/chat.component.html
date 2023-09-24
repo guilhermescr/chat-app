@@ -1,4 +1,19 @@
 <main>
   <app-chat-list></app-chat-list>
-  <app-chat-box></app-chat-box>
+
+  <section>
+    <section class="chat-messages">
+      <article
+        *ngFor="let message of messages"
+        class="message"
+        [ngClass]="
+          username === message.author ? 'host-message' : 'friend-message'
+        "
+      >
+        {{ message.messageText }}
+      </article>
+    </section>
+
+    <app-chat-box (addNewMessageEvent)="addNewMessage($event)"></app-chat-box>
+  </section>
 </main>

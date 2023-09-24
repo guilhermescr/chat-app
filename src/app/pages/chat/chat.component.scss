@@ -2,5 +2,36 @@
   main {
     display: grid;
     grid-template-columns: 280px 1fr;
+
+    > section {
+      background-color: #efefef;
+      border: 1px solid #aaa;
+      border-radius: 10px;
+
+      .chat-messages {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+
+        .message {
+          border-radius: 11px;
+          line-height: 25px;
+          max-width: 300px;
+          padding: 10px 15px;
+
+          &.host-message {
+            background-color: #47a4fb;
+            color: #fff;
+            margin-left: auto;
+          }
+
+          &.friend-message {
+            background-color: #fff;
+            border: 1px solid #bbb;
+          }
+        }
+      }
+    }
   }
 }

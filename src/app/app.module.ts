@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { PagesModule } from './pages/pages.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    SharedModule,
     PagesModule,
   ],
   providers: [],
