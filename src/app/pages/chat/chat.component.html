@@ -13,15 +13,10 @@
 
     <ng-template #showChatMessages>
       <section class="chat-messages">
-        <article
+        <app-user-message
           *ngFor="let message of messages"
-          class="message"
-          [ngClass]="
-            username === message.author ? 'host-message' : 'friend-message'
-          "
-        >
-          {{ message.messageText }}
-        </article>
+          [isHostUserWhoSentTheMessage]="username === message.username" [messageData]="message"
+        ></app-user-message>
       </section>
 
       <app-chat-box (addNewMessageEvent)="addNewMessage($event)"></app-chat-box>

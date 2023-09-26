@@ -54,3 +54,11 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  :host {
+    section {
+      max-width: 100vw;
+    }
+  }
+}

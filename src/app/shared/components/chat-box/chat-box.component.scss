@@ -3,7 +3,6 @@
 :host {
   section {
     background-color: #fff;
-    border-radius: 0 0 10px 10px;
     @include mixins.flex-center;
     padding-inline: 15px;
 

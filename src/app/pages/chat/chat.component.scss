@@ -9,8 +9,8 @@
     > section {
       background-color: #efefef;
       border: 1px solid #aaa;
-      border-radius: 10px;
       @include mixins.flex-center(column);
+      max-height: 100vh;
       width: 100%;
 
       > * {
@@ -36,26 +36,18 @@
         flex-direction: column;
         gap: 15px;
         margin-bottom: auto;
+        overflow-y: auto;
         padding: 20px;
-
-        .message {
-          border-radius: 11px;
-          line-height: 25px;
-          max-width: 300px;
-          padding: 10px 15px;
-
-          &.host-message {
-            background-color: #47a4fb;
-            color: #fff;
-            margin-left: auto;
-          }
-
-          &.friend-message {
-            background-color: #fff;
-            border: 1px solid #bbb;
-          }
-        }
+        scroll-behavior: smooth;
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    main {
+      grid-template-columns: 1fr;
     }
   }
 }

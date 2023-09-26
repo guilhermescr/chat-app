@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Message } from 'src/app/shared/models/message.model';
+
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChatService } from 'src/app/shared/services/chat.service';
+import { Message } from 'src/app/shared/models/message.model';
 
 @Component({
   selector: 'app-chat',
@@ -22,15 +23,51 @@ export class ChatComponent {
         this.username = userName;
       }
     });
+  }
 
-    this.chatService.globalChatRef
-      .valueChanges()
-      .subscribe((messagesData) => (this.messages = messagesData));
+  ngOnInit(): void {
+    this.chatService.globalChatRef.snapshotChanges().subscribe((data) => {
+      this.messages = [];
+
+      data.forEach((item) => {
+        const messageData = item.payload.toJSON()!;
+
+        if ('username' in messageData && 'messageText' in messageData) {
+          const username = messageData.username as string;
+          const messageText = messageData.messageText as string;
+
+          const userFound = this.chatService.users.find(
+            (user) => user.username === username
+          );
+
+          const message: Message = {
+            username,
+            messageText,
+          };
+
+          if (userFound) {
+            message.usernameHeadingColor = userFound.usernameHeadingColor;
+          }
+
+          if (item.key) {
+            message.key = item.key;
+          }
+
+          this.messages.push(message);
+        }
+      });
+
+      const CHAT_CONTAINER = document.querySelector('.chat-messages');
+
+      setTimeout(() => {
+        CHAT_CONTAINER?.scrollTo(0, CHAT_CONTAINER.scrollHeight);
+      }, 50);
+    });
   }
 
   addNewMessage(newMessage: string): void {
     this.chatService.addMessageToGlobalChat({
-      author: this.username,
+      username: this.username,
       messageText: newMessage,
     });
   }

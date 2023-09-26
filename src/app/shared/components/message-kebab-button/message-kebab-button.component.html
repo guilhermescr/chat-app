@@ -1,0 +1,13 @@
+<div
+  role="button"
+  class="kebab_icon_container"
+  (click)="!isKebabMenuOpen ? openKebabMenu() : closeKebabMenu()"
+>
+  <div class="kebab_dot"></div>
+  <div class="kebab_dot"></div>
+  <div class="kebab_dot"></div>
+</div>
+
+<div class="kebab_additional_menu" *ngIf="isKebabMenuOpen">
+  <button (click)="deleteMessage()" role="button">Delete Message</button>
+</div>

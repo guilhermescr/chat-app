@@ -1,0 +1,23 @@
+<article
+  class="message"
+  [ngClass]="isHostUserWhoSentTheMessage ? 'host-message' : 'friend-message'"
+  [ngStyle]="
+    isHostUserWhoSentTheMessage
+      ? { 'margin-left': 'auto' }
+      : { 'margin-right': 'auto' }
+  "
+>
+  <app-message-kebab-button
+    *ngIf="isHostUserWhoSentTheMessage"
+    [messageKey]="messageData.key ?? ''"
+  ></app-message-kebab-button>
+
+  <h2
+    *ngIf="!isHostUserWhoSentTheMessage"
+    [ngStyle]="{ color: messageData.usernameHeadingColor }"
+  >
+    {{ messageData.username }}
+  </h2>
+
+  <p>{{ messageData.messageText }}</p>
+</article>

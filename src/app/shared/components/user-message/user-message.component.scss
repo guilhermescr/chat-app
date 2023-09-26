@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  
+  .message {
+    border-radius: 11px;
+    line-height: 25px;
+    max-width: 300px;
+    padding: 10px 15px;
+    word-break: break-all;
+
+    &.host-message {
+      background-color: #47a4fb;
+      color: #fff;
+      text-align: right;
+    }
+
+    &.friend-message {
+      background-color: #fff;
+      border: 1px solid #bbb;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+  }
+}

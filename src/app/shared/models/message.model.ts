@@ -1,4 +1,6 @@
 export interface Message {
-  author: string;
+  key?: string;
+  username: string;
+  usernameHeadingColor?: string;
   messageText: string;
 }
