@@ -8,7 +8,10 @@
 }
 
 :host {
+  display: block;
+  margin-left: auto;
   position: relative;
+  width: max-content;
 
   .kebab_icon_container {
     cursor: pointer;

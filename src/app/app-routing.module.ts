@@ -4,6 +4,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { ChatComponent } from './pages/chat/chat.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
+import { UsersComponent } from './pages/users/users.component';
+import { FriendsComponent } from './pages/users/friends/friends.component';
 
 const routes: Routes = [
   {
@@ -19,6 +21,19 @@ const routes: Routes = [
       {
         path: '',
         component: ChatComponent,
+      },
+    ],
+  },
+  {
+    path: 'users',
+    children: [
+      {
+        path: '',
+        component: UsersComponent,
+      },
+      {
+        path: 'friends',
+        component: FriendsComponent,
       },
     ],
   },

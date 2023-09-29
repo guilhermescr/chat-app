@@ -11,7 +11,6 @@ import { Message } from 'src/app/shared/models/message.model';
 })
 export class ChatComponent {
   username: string = '';
-  isChatOpen: boolean = false;
   messages: Message[] = [];
 
   constructor(
@@ -36,9 +35,9 @@ export class ChatComponent {
           const username = messageData.username as string;
           const messageText = messageData.messageText as string;
 
-          const userFound = this.chatService.users.find(
-            (user) => user.username === username
-          );
+          const userFound = this.authService
+            .getUsers()
+            .find((user) => user.username === username);
 
           const message: Message = {
             username,
@@ -70,9 +69,5 @@ export class ChatComponent {
       username: this.username,
       messageText: newMessage,
     });
-  }
-
-  toggleChatView(): void {
-    this.isChatOpen = !this.isChatOpen;
   }
 }

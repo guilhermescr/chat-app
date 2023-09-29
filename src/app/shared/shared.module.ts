@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { ChatListComponent } from './components/chat-list/chat-list.component';
 import { ChatBoxComponent } from './components/chat-box/chat-box.component';
@@ -15,7 +17,7 @@ import { UserMessageComponent } from './components/user-message/user-message.com
     MessageKebabButtonComponent,
     UserMessageComponent,
   ],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   exports: [
     WrapperComponent,
     ChatListComponent,

@@ -1,53 +1,70 @@
 @use "../../../assets/utilities/mixins";
 
 :host {
-  main {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    min-height: 100vh;
+  > section {
+    background-color: #efefef;
+    border: 1px solid #aaa;
+    @include mixins.flex-center(column);
+    max-height: 100vh;
+    width: 100%;
 
-    > section {
-      background-color: #efefef;
-      border: 1px solid #aaa;
-      @include mixins.flex-center(column);
-      max-height: 100vh;
+    > * {
       width: 100%;
+    }
 
-      > * {
-        width: 100%;
+    .empty-chat {
+      @include mixins.flex-center(column);
+      gap: 15px;
+      padding: 20px;
+
+      h2 {
+        text-align: center;
       }
 
-      .empty-chat {
-        @include mixins.flex-center(column);
-        gap: 15px;
-        padding: 20px;
+      img {
+        max-width: 150px;
+      }
+    }
 
-        h2 {
-          text-align: center;
-        }
+    header {
+      background-color: #fff;
+      @include mixins.flex-center;
+      gap: 15px;
+      justify-content: flex-start;
+      padding: 20px;
+      text-align: center;
+
+      .chat-picture-container {
+        max-width: 50px;
 
         img {
-          max-width: 150px;
+          width: 100%;
         }
       }
 
-      .chat-messages {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: auto;
-        overflow-y: auto;
-        padding: 20px;
-        scroll-behavior: smooth;
+      h2 {
+        font-size: 24px;
       }
+    }
+
+    .chat-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: auto;
+      overflow-y: auto;
+      padding: 20px;
+      scroll-behavior: smooth;
     }
   }
 }
 
 @media (max-width: 768px) {
   :host {
-    main {
-      grid-template-columns: 1fr;
+    > section {
+      header {
+        justify-content: center;
+      }
     }
   }
 }

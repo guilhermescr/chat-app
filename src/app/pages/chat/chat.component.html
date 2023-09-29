@@ -1,25 +1,34 @@
-<main>
-  <app-chat-list (toggleChatViewEvent)="toggleChatView()"></app-chat-list>
-
-  <section>
-    <div *ngIf="!isChatOpen; else showChatMessages" class="empty-chat">
+<section>
+  <!-- <div *ngIf="!isChatOpen; else showChatMessages" class="empty-chat">
       <h2>Open a chat to start a conversation!</h2>
 
       <img
         src="../../../assets/img/chat/chat-balloon.png"
         alt="Chat Balloon Icon"
       />
-    </div>
+    </div> -->
 
-    <ng-template #showChatMessages>
-      <section class="chat-messages">
-        <app-user-message
-          *ngFor="let message of messages"
-          [isHostUserWhoSentTheMessage]="username === message.username" [messageData]="message"
-        ></app-user-message>
-      </section>
+  <ng-template #showChatMessages>
+    <header>
+      <div class="chat-picture-container">
+        <img
+          src="../../../../assets/img/users/profile-pictures/default-user-avatar.png"
+          alt="User Avatar used as Profile Picture"
+          class="user-profile-picture-container__picture"
+        />
+      </div>
 
-      <app-chat-box (addNewMessageEvent)="addNewMessage($event)"></app-chat-box>
-    </ng-template>
-  </section>
-</main>
+      <h2>Global Chat</h2>
+    </header>
+
+    <section class="chat-messages">
+      <app-user-message
+        *ngFor="let message of messages"
+        [isHostUserWhoSentTheMessage]="username === message.username"
+        [messageData]="message"
+      ></app-user-message>
+    </section>
+
+    <app-chat-box (addNewMessageEvent)="addNewMessage($event)"></app-chat-box>
+  </ng-template>
+</section>

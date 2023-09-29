@@ -1,5 +1,7 @@
 <section>
-  <!-- <button class="show-users-button">Users</button> -->
+  <button class="show-users-button">
+    <a routerLink="/users" target="_self" rel="next">Users</a>
+  </button>
 
   <ul>
     <li (click)="toggleChatView()">
@@ -17,7 +19,7 @@
       </div>
     </li>
 
-    <li>
+    <li *ngFor="let friend of friends">
       <div class="user-profile-picture-container">
         <img
           src="../../../../assets/img/users/profile-pictures/default-user-avatar.png"
@@ -27,7 +29,7 @@
       </div>
 
       <div class="user-data">
-        <h2>Gabriel</h2>
+        <h2>{{ friend.username }}</h2>
         <p>Last message...</p>
       </div>
     </li>

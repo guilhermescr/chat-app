@@ -1,3 +1,7 @@
 <app-wrapper>
-  <router-outlet></router-outlet>
+  <main>
+    <app-chat-list (toggleChatViewEvent)="toggleChatView()"></app-chat-list>
+
+    <router-outlet></router-outlet>
+  </main>
 </app-wrapper>

@@ -15,9 +15,7 @@
   <h2
     *ngIf="!isHostUserWhoSentTheMessage"
     [ngStyle]="{ color: messageData.usernameHeadingColor }"
-  >
-    {{ messageData.username }}
-  </h2>
+  >{{ messageData.username }}</h2>
 
   <p>{{ messageData.messageText }}</p>
 </article>

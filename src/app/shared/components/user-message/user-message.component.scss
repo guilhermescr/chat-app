@@ -1,17 +1,17 @@
 :host {
   display: flex;
-  
+
   .message {
     border-radius: 11px;
     line-height: 25px;
-    max-width: 300px;
+    max-width: 450px;
     padding: 10px 15px;
+    white-space: pre-wrap;
     word-break: break-all;
 
     &.host-message {
       background-color: #47a4fb;
       color: #fff;
-      text-align: right;
     }
 
     &.friend-message {

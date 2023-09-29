@@ -14,22 +14,10 @@ export class ChatService {
   private globalChatPath = '/global';
   usersRef: AngularFireList<User>;
   globalChatRef: AngularFireList<Message>;
-  users: User[] = [];
 
   constructor(private fbDb: AngularFireDatabase) {
     this.usersRef = fbDb.list(this.dbPath);
     this.globalChatRef = fbDb.list(this.globalChatPath);
-
-    this.usersRef.valueChanges().subscribe((data) => (this.users = data));
-  }
-
-  registerNewUser(username: string): void {
-    this.usersRef.push({
-      username,
-      isOnline: true,
-      usernameHeadingColor: this.getRandomColorForUsernameHeading(),
-      messages: [],
-    });
   }
 
   addMessageToGlobalChat(message: Message): void {
