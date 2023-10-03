@@ -1,6 +1,6 @@
 @use "../../../assets/utilities/mixins";
 
-.login-section {
+.join-section {
   background-color: #241d01;
   @include mixins.flex-center(column);
   gap: 18px;
@@ -12,23 +12,34 @@
     border-radius: 15px;
     color: #fff;
     @include mixins.flex-center(column);
-    gap: 25px;
-    padding: 35px;
+    padding: 25px;
+
+    h1 {
+      margin-bottom: 15px;
+    }
+
+    .error-message {
+      color: #d42a2a;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
 
     div {
-      @include mixins.flex-center(column);
+      @include mixins.flex-center;
+      gap: 10px;
+      justify-content: flex-start;
+      margin-bottom: 15px;
       width: 100%;
-
-      label {
-        margin-bottom: 10px;
-      }
 
       input {
         border: none;
         border-radius: 4px;
         outline: none;
         padding: 7px;
-        width: 100%;
+
+        &:not([type="checkbox"]) {
+          width: 100%;
+        }
 
         &:focus {
           box-shadow: 0 0 7px #a5924b;

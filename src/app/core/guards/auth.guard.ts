@@ -24,6 +24,6 @@ export class AuthGuard {
     if (localStorage.getItem('username')) {
       return true;
     }
-    return this.router.navigate(['/login']);
+    return this.router.navigate(['/join']);
   }
 }

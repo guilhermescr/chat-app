@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
+import { JoinComponent } from './pages/join/join.component';
 import { ChatComponent } from './pages/chat/chat.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
@@ -26,6 +26,8 @@ const routes: Routes = [
   },
   {
     path: 'users',
+    canActivate: [AuthGuard],
+
     children: [
       {
         path: '',
@@ -38,8 +40,8 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'login',
-    component: LoginComponent,
+    path: 'join',
+    component: JoinComponent,
   },
 ];
 

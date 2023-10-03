@@ -10,13 +10,10 @@ import { Message } from '../models/message.model';
   providedIn: 'root',
 })
 export class ChatService {
-  private dbPath = '/users';
   private globalChatPath = '/global';
-  usersRef: AngularFireList<User>;
   globalChatRef: AngularFireList<Message>;
 
   constructor(private fbDb: AngularFireDatabase) {
-    this.usersRef = fbDb.list(this.dbPath);
     this.globalChatRef = fbDb.list(this.globalChatPath);
   }
 

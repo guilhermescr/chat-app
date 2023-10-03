@@ -1,0 +1,43 @@
+<section class="join-section">
+  <form [formGroup]="joinForm">
+    <h1>Chat App - Join</h1>
+
+    <p class="error-message" *ngIf="joinForm.invalid">
+      This account already exists.
+    </p>
+
+    <div>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Enter a username..."
+        autocomplete="off"
+        formControlName="username"
+      />
+    </div>
+
+    <div>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Enter a password..."
+        formControlName="password"
+      />
+    </div>
+
+    <div>
+      <label for="isNewAccount">Is New Account?</label>
+
+      <input
+        type="checkbox"
+        name="isNewAccount"
+        id="isNewAccount"
+        formControlName="isNewAccount"
+      />
+    </div>
+
+    <button (click)="submitUsername()">Join</button>
+  </form>
+</section>

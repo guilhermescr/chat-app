@@ -17,9 +17,9 @@ export class ChatComponent {
     private authService: AuthService,
     private chatService: ChatService
   ) {
-    this.authService.user.subscribe((userName) => {
-      if (userName) {
-        this.username = userName;
+    this.authService.user.subscribe((userData) => {
+      if (userData) {
+        this.username = userData.username;
       }
     });
   }

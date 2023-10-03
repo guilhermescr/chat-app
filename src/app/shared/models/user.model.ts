@@ -1,7 +1,7 @@
 export interface User {
   username: string;
-  isOnline: boolean;
+  password: string;
   usernameHeadingColor?: string;
-  friends: string[];
-  messages: string[];
+  friends?: string[];
+  messages?: string[];
 }
