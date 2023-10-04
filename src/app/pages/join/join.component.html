@@ -2,8 +2,8 @@
   <form [formGroup]="joinForm">
     <h1>Chat App - Join</h1>
 
-    <p class="error-message" *ngIf="joinForm.invalid">
-      This account already exists.
+    <p class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
     </p>
 
     <div>

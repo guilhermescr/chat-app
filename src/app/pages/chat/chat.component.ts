@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ChatService } from 'src/app/shared/services/chat.service';
 import { Message } from 'src/app/shared/models/message.model';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-chat',
@@ -10,6 +11,7 @@ import { Message } from 'src/app/shared/models/message.model';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent {
+  user!: User;
   username: string = '';
   messages: Message[] = [];
 
@@ -62,6 +64,10 @@ export class ChatComponent {
         CHAT_CONTAINER?.scrollTo(0, CHAT_CONTAINER.scrollHeight);
       }, 50);
     });
+
+    setTimeout(() => {
+      this.user = this.authService.getLocalUser();
+    }, 1000);
   }
 
   addNewMessage(newMessage: string): void {

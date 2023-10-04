@@ -48,12 +48,24 @@ export class AuthService {
     return this.getUsers().find((user) => user.username === username)!;
   }
 
+  getLocalUser(): User {
+    return this.getUser(this.localUsername!);
+  }
+
   getUsers(): User[] {
     return this.usersSubject.value;
   }
 
   checkIfUserIsRegisteredInDatabase(username: string): boolean {
     return !!this.getUsers().find((user) => user.username === username);
+  }
+
+  isUserDataEqualToOneOfTheRegisteredOnes(userData: User): boolean {
+    return !!this.getUsers().find(
+      (user) =>
+        user.username === userData.username &&
+        user.password === userData.password
+    );
   }
 
   registerUser(user: User): void {
@@ -75,18 +87,6 @@ export class AuthService {
       friends: [],
       messages: [],
     };
-    const isUserRegisteredInDatabase = this.checkIfUserIsRegisteredInDatabase(
-      userData.username
-    );
-
-    if (
-      (isNewAccount && isUserRegisteredInDatabase) ||
-      (!isNewAccount && !isUserRegisteredInDatabase)
-    ) {
-      // throw error at JoinComponent View
-
-      return;
-    }
 
     if (isNewAccount) {
       this.registerUser(user);

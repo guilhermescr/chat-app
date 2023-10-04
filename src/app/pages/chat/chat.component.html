@@ -1,4 +1,10 @@
 <section>
+  <h1>Welcome!</h1>
+  <ul>
+    <h2>You are:</h2>
+    <li><strong>Username:</strong> {{ user?.username }}</li>
+    <li><strong>Password:</strong> {{ user?.password }}</li>
+  </ul>
   <!-- <div *ngIf="!isChatOpen; else showChatMessages" class="empty-chat">
       <h2>Open a chat to start a conversation!</h2>
 
@@ -8,6 +14,7 @@
       />
     </div> -->
 
+  <!-- 
   <ng-template #showChatMessages>
     <header>
       <div class="chat-picture-container">
@@ -31,4 +38,5 @@
 
     <app-chat-box (addNewMessageEvent)="addNewMessage($event)"></app-chat-box>
   </ng-template>
+   -->
 </section>
