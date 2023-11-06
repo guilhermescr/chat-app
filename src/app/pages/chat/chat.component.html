@@ -1,20 +1,17 @@
 <section>
-  <h1>Welcome!</h1>
-  <ul>
-    <h2>You are:</h2>
-    <li><strong>Username:</strong> {{ user?.username }}</li>
-    <li><strong>Password:</strong> {{ user?.password }}</li>
-  </ul>
-  <!-- <div *ngIf="!isChatOpen; else showChatMessages" class="empty-chat">
-      <h2>Open a chat to start a conversation!</h2>
+  <app-chat-tab [messages]="messages"></app-chat-tab>
 
-      <img
-        src="../../../assets/img/chat/chat-balloon.png"
-        alt="Chat Balloon Icon"
-      />
-    </div> -->
+  <!-- *ngIf="!isChatOpen; else showChatMessages" -->
+  <!-- <div class="empty-chat">
+    <h2>Open a chat to start a conversation!</h2>
 
-  <!-- 
+    <img
+      src="../../../assets/img/chat/chat-balloon.png"
+      alt="Chat Balloon Icon"
+    />
+  </div> -->
+
+  <!--
   <ng-template #showChatMessages>
     <header>
       <div class="chat-picture-container">
@@ -36,7 +33,7 @@
       ></app-user-message>
     </section>
 
-    <app-chat-box (addNewMessageEvent)="addNewMessage($event)"></app-chat-box>
+    <app-chat-bar (addNewMessageEvent)="addNewMessage($event)"></app-chat-bar>
   </ng-template>
-   -->
+  -->
 </section>

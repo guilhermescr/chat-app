@@ -19,11 +19,22 @@
 
     <div>
       <input
-        type="password"
+        type="{{ isPasswordVisible ? 'text' : 'password' }}"
         name="password"
         id="password"
         placeholder="Enter a password..."
         formControlName="password"
+      />
+
+      <img
+        (click)="togglePasswordVisibility()"
+        class="eye-icon"
+        src="{{
+          isPasswordVisible
+            ? '../../../assets/icons/eye-password-hide.svg'
+            : '../../../assets/icons/eye-password-show.svg'
+        }}"
+        alt="Show Password Eye Icon"
       />
     </div>
 

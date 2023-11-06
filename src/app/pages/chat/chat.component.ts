@@ -11,7 +11,7 @@ import { User } from 'src/app/shared/models/user.model';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent {
-  user!: User;
+  user: User | null = null;
   username: string = '';
   messages: Message[] = [];
 
@@ -68,12 +68,5 @@ export class ChatComponent {
     setTimeout(() => {
       this.user = this.authService.getLocalUser();
     }, 1000);
-  }
-
-  addNewMessage(newMessage: string): void {
-    this.chatService.addMessageToGlobalChat({
-      username: this.username,
-      messageText: newMessage,
-    });
   }
 }

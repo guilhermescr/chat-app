@@ -32,6 +32,7 @@
       gap: 10px;
       justify-content: flex-start;
       margin-bottom: 15px;
+      position: relative;
       width: 100%;
 
       input {
@@ -47,6 +48,14 @@
         &:focus {
           box-shadow: 0 0 7px #a5924b;
         }
+      }
+
+      .eye-icon {
+        cursor: pointer;
+        max-width: 23px;
+        position: absolute;
+        right: 3%;
+        width: 100%;
       }
     }
 

@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class JoinComponent {
   errorMessage: string = '';
+  isPasswordVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -20,7 +21,7 @@ export class JoinComponent {
       alert(
         "You're already logged in. Please, log out before coming to this page."
       );
-      
+
       this.router.navigateByUrl('/chat');
     }
   }
@@ -78,5 +79,9 @@ export class JoinComponent {
         ? 'You must provide a username and password.'
         : 'Password must have at least 8 characters.';
     }
+  }
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 }

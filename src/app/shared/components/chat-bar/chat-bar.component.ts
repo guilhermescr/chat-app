@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-chat-box',
-  templateUrl: './chat-box.component.html',
-  styleUrls: ['./chat-box.component.scss'],
+  selector: 'app-chat-bar',
+  templateUrl: './chat-bar.component.html',
+  styleUrls: ['./chat-bar.component.scss'],
 })
-export class ChatBoxComponent {
+export class ChatBarComponent {
   @Output() addNewMessageEvent = new EventEmitter<string>();
   messageText: string = '';
 

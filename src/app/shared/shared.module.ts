@@ -4,24 +4,27 @@ import { RouterModule } from '@angular/router';
 
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { ChatListComponent } from './components/chat-list/chat-list.component';
-import { ChatBoxComponent } from './components/chat-box/chat-box.component';
+import { ChatBarComponent } from './components/chat-bar/chat-bar.component';
 import { FormsModule } from '@angular/forms';
 import { MessageKebabButtonComponent } from './components/message-kebab-button/message-kebab-button.component';
 import { UserMessageComponent } from './components/user-message/user-message.component';
+import { ChatTabComponent } from './components/chat-tab/chat-tab.component';
 
 @NgModule({
   declarations: [
     WrapperComponent,
     ChatListComponent,
-    ChatBoxComponent,
+    ChatBarComponent,
     MessageKebabButtonComponent,
     UserMessageComponent,
+    ChatTabComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [
     WrapperComponent,
     ChatListComponent,
-    ChatBoxComponent,
+    ChatBarComponent,
+    ChatTabComponent,
     UserMessageComponent,
     MessageKebabButtonComponent,
   ],

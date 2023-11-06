@@ -25,46 +25,5 @@
         max-width: 150px;
       }
     }
-
-    header {
-      background-color: #fff;
-      @include mixins.flex-center;
-      gap: 15px;
-      justify-content: flex-start;
-      padding: 20px;
-      text-align: center;
-
-      .chat-picture-container {
-        max-width: 50px;
-
-        img {
-          width: 100%;
-        }
-      }
-
-      h2 {
-        font-size: 24px;
-      }
-    }
-
-    .chat-messages {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: auto;
-      overflow-y: auto;
-      padding: 20px;
-      scroll-behavior: smooth;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  :host {
-    > section {
-      header {
-        justify-content: center;
-      }
-    }
   }
 }
