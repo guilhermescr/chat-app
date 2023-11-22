@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { JoinComponent } from './pages/join/join.component';
-import { ChatComponent } from './pages/chat/chat.component';
+import { HomeComponent } from './pages/chat/home/home.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
 import { UsersComponent } from './pages/users/users.component';
 import { FriendsComponent } from './pages/users/friends/friends.component';
+import { ChatComponent } from './pages/chat/chat.component';
 
 const routes: Routes = [
   {
@@ -16,13 +17,9 @@ const routes: Routes = [
   {
     path: 'chat',
     canActivate: [AuthGuard],
-
-    children: [
-      {
-        path: '',
-        component: ChatComponent,
-      },
-    ],
+    component: ChatComponent,
+    loadChildren: () =>
+      import('./pages/chat/chat.module').then((m) => m.ChatModule),
   },
   {
     path: 'users',

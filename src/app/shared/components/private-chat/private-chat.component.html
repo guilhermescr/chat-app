@@ -1,0 +1,30 @@
+<header>
+  <div class="chat-picture-container">
+    <img
+      src="../../../../assets/img/users/profile-pictures/default-user-avatar.png"
+      alt="User Avatar used as Profile Picture"
+      class="user-profile-picture-container__picture"
+    />
+  </div>
+
+  <h2>{{ privateChatData.friendUsername }}</h2>
+</header>
+
+<section class="chat-messages">
+  <div class="empty-chat" *ngIf="!messages.length">
+    <h2>No messages yet!</h2>
+
+    <img
+      src="../../../assets/img/chat/chat-balloon.png"
+      alt="Chat Balloon Icon"
+    />
+  </div>
+
+  <app-user-message
+    *ngFor="let message of messages"
+    [isHostUserWhoSentTheMessage]="username === message.username"
+    [messageData]="message"
+  ></app-user-message>
+</section>
+
+<app-chat-bar (addNewMessageEvent)="addNewMessage($event)"></app-chat-bar>

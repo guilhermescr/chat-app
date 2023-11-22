@@ -1,9 +1,9 @@
 @use "../../../../assets/utilities/mixins";
 
 :host {
-  section {
+  .chat-list {
     background-color: #383838;
-    max-width: 600px;
+    max-width: 400px;
     min-height: 100vh;
     width: 100%;
 
@@ -82,8 +82,11 @@
 
 @media (max-width: 768px) {
   :host {
+    .chat-list {
+      max-width: none;
+    }
     section {
-      max-width: 100vw;
+      // max-width: 100vw;
     }
   }
 }

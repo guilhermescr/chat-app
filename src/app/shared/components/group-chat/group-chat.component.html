@@ -11,6 +11,15 @@
 </header>
 
 <section class="chat-messages">
+  <div class="empty-chat" *ngIf="!messages.length">
+    <h2>No messages yet!</h2>
+
+    <img
+      src="../../../assets/img/chat/chat-balloon.png"
+      alt="Chat Balloon Icon"
+    />
+  </div>
+
   <app-user-message
     *ngFor="let message of messages"
     [isHostUserWhoSentTheMessage]="username === message.username"

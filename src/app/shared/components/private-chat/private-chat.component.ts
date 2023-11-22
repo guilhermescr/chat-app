@@ -1,15 +1,16 @@
 import { Component, Input } from '@angular/core';
-import { Message } from '../../models/message.model';
 import { AuthService } from '../../services/auth.service';
 import { ChatService } from '../../services/chat.service';
+import { Message } from '../../models/message.model';
 
 @Component({
-  selector: 'app-chat-tab',
-  templateUrl: './chat-tab.component.html',
-  styleUrls: ['./chat-tab.component.scss'],
+  selector: 'app-private-chat',
+  templateUrl: './private-chat.component.html',
+  styleUrls: ['./private-chat.component.scss'],
 })
-export class ChatTabComponent {
+export class PrivateChatComponent {
   @Input() messages: Message[] = [];
+  @Input() privateChatData: any;
   username: string = '';
 
   constructor(
