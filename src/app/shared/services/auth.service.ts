@@ -105,4 +105,6 @@ export class AuthService {
       (friend) => friend === possibleFriend.username
     );
   }
+
+  addFriend(): void {}
 }

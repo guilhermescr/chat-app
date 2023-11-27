@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { FriendsComponent } from '../friends/friends.component';
 import { OneOnOneComponent } from './one-on-one/one-on-one.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },
+  {
+    path: 'friends',
+    component: FriendsComponent,
   },
   {
     path: 'one-on-one/:id',

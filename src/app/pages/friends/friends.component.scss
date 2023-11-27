@@ -1,0 +1,67 @@
+@use "../../../assets/utilities/mixins";
+
+:host {
+  display: block;
+  width: 100%;
+
+  .users {
+    // height: 100%;
+
+    h2 {
+      font-size: 28px;
+      margin-block: 9px;
+      text-align: center;
+    }
+
+    .users-list {
+      background-color: #383838;
+      height: 100%;
+      list-style: none;
+
+      li {
+        background-color: #fff;
+        @include mixins.flex-center;
+        gap: 12px;
+        justify-content: space-between;
+        padding: 10px;
+        width: max-content;
+
+        .user-data {
+          align-items: center;
+          display: flex;
+          gap: 10px;
+
+          img {
+            max-width: 40px;
+          }
+
+          h3 {
+          }
+        }
+
+        .actions {
+          .add-user-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        
+
+            img {
+              margin-top: 3px;
+
+              width: 100%;
+
+              &.not-added-friend {
+                max-width: 20px;
+              }
+
+              &.added-friend {
+                max-width: 35px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

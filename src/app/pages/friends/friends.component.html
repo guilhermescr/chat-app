@@ -1,0 +1,34 @@
+<section class="users">
+  <h2>Users</h2>
+
+  <ul class="users-list">
+    <li *ngFor="let user of users">
+      <div class="user-data">
+        <img
+          src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+          alt="User Avatar"
+        />
+
+        <h3>{{ user.username }}</h3>
+      </div>
+
+      <div class="actions">
+        <button class="add-user-button">
+          <img
+            class="not-added-friend"
+            src="../../../assets/icons/add-user.svg"
+            alt="Add User Icon"
+            *ngIf="!checkIfUserIsMyFriend(user)"
+          />
+
+          <img
+            class="added-friend"
+            src="../../../assets/icons/friend.svg"
+            alt="Add User Icon"
+            *ngIf="checkIfUserIsMyFriend(user)"
+          />
+        </button>
+      </div>
+    </li>
+  </ul>
+</section>

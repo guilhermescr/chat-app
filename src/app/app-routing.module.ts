@@ -5,7 +5,7 @@ import { HomeComponent } from './pages/chat/home/home.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
 import { UsersComponent } from './pages/users/users.component';
-import { FriendsComponent } from './pages/users/friends/friends.component';
+import { FriendsComponent } from './pages/friends/friends.component';
 import { ChatComponent } from './pages/chat/chat.component';
 
 const routes: Routes = [
@@ -20,21 +20,6 @@ const routes: Routes = [
     component: ChatComponent,
     loadChildren: () =>
       import('./pages/chat/chat.module').then((m) => m.ChatModule),
-  },
-  {
-    path: 'users',
-    canActivate: [AuthGuard],
-
-    children: [
-      {
-        path: '',
-        component: UsersComponent,
-      },
-      {
-        path: 'friends',
-        component: FriendsComponent,
-      },
-    ],
   },
   {
     path: 'join',
