@@ -5,8 +5,10 @@ import {
   AngularFireList,
 } from '@angular/fire/compat/database';
 import { BehaviorSubject } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
+
 import { ChatService } from './chat.service';
-import { User } from '../models/user.model';
+import { User, UserLogin } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,13 +36,58 @@ export class AuthService {
   ) {
     this.usersRef = fbDb.list(this.dbPath);
 
-    this.usersRef.valueChanges().subscribe((usersData) => {
-      this.usersSubject.next(usersData);
-      this.usersWithoutMe = usersData.filter(
+    this.usersRef.snapshotChanges().subscribe((usersData) => {
+      let usersList = usersData.map((userData) => {
+        const userDataPayloadValue = userData.payload.val()!;
+        const hasFriendsArrayInUserData =
+          Object.keys(userDataPayloadValue).includes('friends');
+
+        if (!hasFriendsArrayInUserData) {
+          const userDataReturn = {
+            databaseKey: userData.key!,
+            ...userDataPayloadValue,
+            friends: {
+              friendsList: [],
+              sentRequests: [],
+              receivedRequests: [],
+            },
+          };
+
+          return userDataReturn;
+        } else {
+          const friendsProps = Object.keys(userDataPayloadValue.friends);
+
+          const hasFriendsListInUserData = friendsProps.includes('friendsList');
+          const hasSentRequestsInUserData =
+            friendsProps.includes('sentRequests');
+          const hasReceivedRequestsInUserData =
+            friendsProps.includes('receivedRequests');
+
+          let userDataReturn = {
+            databaseKey: userData.key!,
+            ...userDataPayloadValue,
+          };
+
+          if (!hasFriendsListInUserData) {
+            userDataReturn.friends.friendsList = [];
+          }
+
+          if (!hasSentRequestsInUserData) {
+            userDataReturn.friends.sentRequests = [];
+          }
+
+          if (!hasReceivedRequestsInUserData) {
+            userDataReturn.friends.receivedRequests = [];
+          }
+
+          return userDataReturn;
+        }
+      });
+
+      this.usersSubject.next(usersList);
+      this.usersWithoutMe = usersList.filter(
         (userData) => userData.username !== this.userSubject.value?.username
       );
-
-      console.log(usersData, this.usersWithoutMe);
     });
   }
 
@@ -60,7 +107,7 @@ export class AuthService {
     return !!this.getUsers().find((user) => user.username === username);
   }
 
-  isUserDataEqualToOneOfTheRegisteredOnes(userData: User): boolean {
+  isUserDataEqualToOneOfTheRegisteredOnes(userData: UserLogin): boolean {
     return !!this.getUsers().find(
       (user) =>
         user.username === userData.username &&
@@ -80,11 +127,11 @@ export class AuthService {
     this.router.navigateByUrl('/chat');
   }
 
-  handleAuthentication(userData: User, isNewAccount: boolean): void {
+  handleAuthentication(userData: any, isNewAccount: boolean): void {
     const user: User = {
+      id: uuidv4(),
       ...userData,
       usernameHeadingColor: this.chatService.getRandomColorForUsernameHeading(),
-      friends: [],
       messages: [],
     };
 
@@ -101,10 +148,9 @@ export class AuthService {
   }
 
   isThisUserMyFriend(possibleFriend: User): boolean {
-    return !!this.userSubject.value?.friends?.find(
-      (friend) => friend === possibleFriend.username
-    );
+    return !![].find((friend: any) => friend === possibleFriend.username);
+    // return !!this.userSubject.value?.friends?.find(
+    //   (friend: any) => friend === possibleFriend.username
+    // );
   }
-
-  addFriend(): void {}
 }
