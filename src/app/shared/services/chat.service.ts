@@ -3,18 +3,22 @@ import {
   AngularFireDatabase,
   AngularFireList,
 } from '@angular/fire/compat/database';
-import { User } from '../models/user.model';
 import { Message } from '../models/message.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private globalChatPath = '/global';
+  private globalChatPath = '/chat/global';
   globalChatRef: AngularFireList<Message>;
 
   constructor(private fbDb: AngularFireDatabase) {
     this.globalChatRef = fbDb.list(this.globalChatPath);
+  }
+
+  getGlobalMessages(): Observable<Message[]> {
+    return this.globalChatRef.valueChanges();
   }
 
   addMessageToGlobalChat(message: Message): void {
@@ -22,7 +26,7 @@ export class ChatService {
   }
 
   deleteMessageFromGlobalChat(messageKey: string): void {
-    const messageRef = this.fbDb.object('global/' + messageKey);
+    const messageRef = this.fbDb.object('chat/global/' + messageKey);
     messageRef.remove();
   }
 
@@ -30,7 +34,7 @@ export class ChatService {
     const colors = [
       '#ff0000',
       '#ffa500',
-      '#ffff00',
+      '#f0d228',
       '#008000',
       '#0000ff',
       '#4b0082',

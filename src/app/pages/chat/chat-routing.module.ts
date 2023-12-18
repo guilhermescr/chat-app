@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FriendsComponent } from '../friends/friends.component';
 import { OneOnOneComponent } from './one-on-one/one-on-one.component';
+import { GlobalComponent } from './global/global.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'friends',
     component: FriendsComponent,
+  },
+  {
+    path: 'global',
+    component: GlobalComponent,
   },
   {
     path: 'one-on-one/:id',

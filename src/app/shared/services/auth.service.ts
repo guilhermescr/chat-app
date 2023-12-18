@@ -20,9 +20,9 @@ export class AuthService {
   public users = this.usersSubject.asObservable();
   usersWithoutMe: User[] = [];
 
-  private userSubject: BehaviorSubject<User | null> =
+  private localUserSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
-  public user = this.userSubject.asObservable();
+  public localUser = this.localUserSubject.asObservable();
 
   private dbPath = '/users';
   usersRef: AngularFireList<User>;
@@ -84,9 +84,15 @@ export class AuthService {
         }
       });
 
+      const localUser = usersList.find(
+        (userData) => userData.username === this.localUsername
+      )!;
+
+      this.localUserSubject.next(localUser);
+
       this.usersSubject.next(usersList);
       this.usersWithoutMe = usersList.filter(
-        (userData) => userData.username !== this.userSubject.value?.username
+        (userData) => userData.username !== this.localUsername
       );
     });
   }
@@ -96,7 +102,7 @@ export class AuthService {
   }
 
   getLocalUser(): User {
-    return this.getUser(this.localUsername!);
+    return this.localUserSubject.value!;
   }
 
   getUsers(): User[] {
@@ -122,7 +128,7 @@ export class AuthService {
 
   joinUser(user: User): void {
     localStorage.setItem('username', user.username);
-    this.userSubject.next(user);
+    this.localUserSubject.next(user);
 
     this.router.navigateByUrl('/chat');
   }
@@ -144,7 +150,7 @@ export class AuthService {
 
   logOutUser(): void {
     localStorage.removeItem('username');
-    this.userSubject.next(null);
+    this.localUserSubject.next(null);
   }
 
   isThisUserMyFriend(possibleFriend: User): boolean {

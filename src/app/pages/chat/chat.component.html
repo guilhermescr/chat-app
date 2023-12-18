@@ -1,36 +1,4 @@
 <main>
   <app-chat-list></app-chat-list>
   <router-outlet></router-outlet>
-
-  <!-- This component must be shown when a chat is opened
-  <app-chat-tab [messages]="messages"></app-chat-tab>
-   -->
-
-  <!-- *ngIf="!isChatOpen; else showChatMessages" -->
-
-  <!--
-  <ng-template #showChatMessages>
-    <header>
-      <div class="chat-picture-container">
-        <img
-          src="../../../../assets/img/users/profile-pictures/default-user-avatar.png"
-          alt="User Avatar used as Profile Picture"
-          class="user-profile-picture-container__picture"
-        />
-      </div>
-
-      <h2>Global Chat</h2>
-    </header>
-
-    <section class="chat-messages">
-      <app-user-message
-        *ngFor="let message of messages"
-        [isHostUserWhoSentTheMessage]="username === message.username"
-        [messageData]="message"
-      ></app-user-message>
-    </section>
-
-    <app-chat-bar (addNewMessageEvent)="addNewMessage($event)"></app-chat-bar>
-  </ng-template>
-  -->
 </main>

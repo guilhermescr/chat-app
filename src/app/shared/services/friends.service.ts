@@ -16,38 +16,31 @@ export class FriendsService {
   sendFriendRequest(user: User): void {
     const localUser = this.authService.getLocalUser();
 
-    // my possible friend receives my id in his receivedRequests list
     const possibleFriendObject = {
       ...user,
       friends: {
         friendsList: user.friends.friendsList,
         sentRequests: user.friends.sentRequests,
         receivedRequests: [
-          ...user.friends.receivedRequests,
+          ...localUser.friends.receivedRequests,
           localUser.databaseKey!,
         ],
       },
     };
-    // this.fbDb.object<User>(`users/${user.databaseKey!}`).update(possibleFriendObject);
+    this.fbDb
+      .object<User>(`users/${user.databaseKey!}`)
+      .update(possibleFriendObject);
 
-    // my possible friend's id enters my sentRequests list
     const localUserObject = {
       ...localUser,
       friends: {
         friendsList: localUser.friends.friendsList,
-        sentRequests: [
-          ...localUser.friends.sentRequests,
-          localUser.databaseKey!,
-        ],
+        sentRequests: [...localUser.friends.sentRequests, user.databaseKey!],
         receivedRequests: localUser.friends.receivedRequests,
       },
     };
-    // this.fbDb
-    //   .object<User>(`users/${localUser.databaseKey!}`)
-    //   .update(localUserObject);
-
-    console.log(possibleFriendObject, localUserObject);
+    this.fbDb
+      .object<User>(`users/${localUser.databaseKey!}`)
+      .update(localUserObject);
   }
-
-  addFriend(): void {}
 }

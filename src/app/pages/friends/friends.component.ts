@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/shared/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FriendsService } from 'src/app/shared/services/friends.service';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-friends',
@@ -10,6 +10,7 @@ import { FriendsService } from 'src/app/shared/services/friends.service';
 })
 export class FriendsComponent {
   users: User[] = [];
+  localUser: User | null = null;
 
   constructor(
     private authService: AuthService,
@@ -23,10 +24,20 @@ export class FriendsComponent {
           (user) => user.username !== localStorage.getItem('username')
         ))
     );
+
+    this.authService.localUser.subscribe(
+      (localUserData) => (this.localUser = localUserData)
+    );
   }
 
   checkIfUserIsMyFriend(user: User): boolean {
     return this.authService.isThisUserMyFriend(user);
+  }
+
+  isPendingFriendRequest(user: User): boolean {
+    return user.friends.receivedRequests.includes(
+      this.authService.getLocalUser().databaseKey!
+    );
   }
 
   sendFriendRequest(user: User): void {

@@ -17,7 +17,7 @@ export class PrivateChatComponent {
     private authService: AuthService,
     private chatService: ChatService
   ) {
-    this.authService.user.subscribe((userData) => {
+    this.authService.localUser.subscribe((userData) => {
       if (userData) {
         this.username = userData.username;
       }

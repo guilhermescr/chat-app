@@ -1,35 +1,305 @@
-<section class="users">
-  <h2>Users</h2>
+<header>
+  <button
+    class="open-friend-requests-button"
+    matBadge="{{ localUser?.friends?.receivedRequests?.length }}"
+    matBadgePosition="after"
+    matBadgeColor="warn"
+    matBadgeDescription="Friend Requests"
+    aria-label="Friend Requests"
+  >
+    Friend Requests
+  </button>
+</header>
 
-  <ul class="users-list">
-    <li *ngFor="let user of users">
-      <div class="user-data">
+<section class="friend-requests-modal">
+  <div class="background-overlay"></div>
+
+  <section class="friend-requests-container">
+    <mat-icon
+      class="close-friend-requests-modal-button"
+      aria-hidden="false"
+      aria-label="Close Icon"
+      fontIcon="close"
+    ></mat-icon>
+
+    <h2>Friend Requests</h2>
+
+    <ul class="friend-requests-list">
+      <li *ngFor="let possibleFriendId of localUser?.friends?.receivedRequests">
+        <div class="content">
+          <img
+            src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+            alt="User Avatar"
+          />
+
+          <h3>Test</h3>
+        </div>
+
+        <div class="actions">
+          <button
+            class="friend-request-action-button accept-friend-request-button"
+          >
+            Accept
+          </button>
+          <button
+            class="friend-request-action-button decline-friend-request-button"
+          >
+            Decline
+          </button>
+        </div>
+      </li>
+    </ul>
+  </section>
+</section>
+
+<ul class="users-list">
+  <li *ngFor="let user of users">
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>{{ user.username }}</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
         <img
-          src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-          alt="User Avatar"
+          class="request-sent"
+          src="../../../../assets/icons/request-sent.svg"
+          alt="Request Sent Icon"
+          *ngIf="isPendingFriendRequest(user); else showAddOrAddedFriendIcon"
         />
 
-        <h3>{{ user.username }}</h3>
-      </div>
-
-      <div class="actions">
-        <button class="add-user-button">
+        <ng-template #showAddOrAddedFriendIcon>
           <img
             (click)="sendFriendRequest(user)"
             class="not-added-friend"
-            src="../../../assets/icons/add-user.svg"
+            src="../../../../assets/icons/add-user.svg"
             alt="Add User Icon"
             *ngIf="!checkIfUserIsMyFriend(user)"
           />
 
           <img
             class="added-friend"
-            src="../../../assets/icons/friend.svg"
+            src="../../../../assets/icons/friend.svg"
             alt="Add User Icon"
             *ngIf="checkIfUserIsMyFriend(user)"
           />
-        </button>
-      </div>
-    </li>
-  </ul>
-</section>
+        </ng-template>
+      </button>
+    </div>
+  </li>
+
+  <!-- Test below -->
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+
+  <li>
+    <div class="user-data">
+      <img
+        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+        alt="User Avatar"
+      />
+
+      <h3>Test</h3>
+    </div>
+
+    <div class="actions">
+      <button class="add-user-button">
+        <img
+          class="not-added-friend"
+          src="../../../assets/icons/add-user.svg"
+          alt="Add User Icon"
+        />
+      </button>
+    </div>
+  </li>
+</ul>

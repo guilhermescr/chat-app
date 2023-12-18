@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 
@@ -8,18 +9,19 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./chat-list.component.scss'],
 })
 export class ChatListComponent {
-  @Output() toggleChatViewEvent = new EventEmitter();
   friends: User[] = [];
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.friends = this.authService.getUsers().filter(
-      (user) => user.username !== localStorage.getItem('username')
-    );
+    this.friends = this.authService
+      .getUsers()
+      .filter((user) => user.username !== localStorage.getItem('username'));
   }
 
-  toggleChatView(): void {
-    this.toggleChatViewEvent.emit();
+  navigateToGlobalChat(): void {
+    if (this.router.url !== '/chat/global') {
+      this.router.navigateByUrl('/chat/global');
+    }
   }
 }

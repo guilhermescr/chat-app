@@ -2,61 +2,190 @@
 
 :host {
   display: block;
+  position: relative;
   width: 100%;
 
-  .users {
-    // height: 100%;
+  header {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    height: 60px;
+    padding-inline: 15px;
 
-    h2 {
-      font-size: 28px;
-      margin-block: 9px;
-      text-align: center;
+    .open-friend-requests-button {
+      background-color: #5c5e5e;
+      border-radius: 4px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 7px 10px;
+
+      &:hover {
+        background-color: #3c3e3e;
+      }
+
+      &:active {
+        background-color: #7c7e7e;
+        filter: brightness(1.1);
+      }
+    }
+  }
+
+  .friend-requests-modal {
+    height: 100%;
+    @include mixins.flex-center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    .background-overlay {
+      background-color: #000;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: -1;
     }
 
-    .users-list {
-      background-color: #383838;
-      height: 100%;
-      list-style: none;
+    .friend-requests-container {
+      background-color: #4a4d4d;
+      border-radius: 8px;
+      color: #fff;
+      min-height: 60vh;
+      min-width: 400px;
+      padding: 25px;
+      position: relative;
+      width: max-content;
 
-      li {
-        background-color: #fff;
-        @include mixins.flex-center;
-        gap: 12px;
-        justify-content: space-between;
-        padding: 10px;
-        width: max-content;
+      .close-friend-requests-modal-button {
+        background-color: #e42525;
+        border-radius: 3px;
+        color: #fff;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+      }
 
-        .user-data {
-          align-items: center;
-          display: flex;
-          gap: 10px;
+      h2 {
+        text-align: center;
+      }
 
-          img {
-            max-width: 40px;
+      .friend-requests-list {
+        @include mixins.flex-center(column);
+        align-items: flex-start;
+        gap: 10px;
+        list-style: none;
+        margin-top: 20px;
+
+        li {
+          background-color: #5c5e5e;
+          border: 1px solid #fff;
+          border-radius: 15px;
+          @include mixins.flex-center;
+          gap: 15px;
+          justify-content: space-between;
+          padding: 12px 15px;
+          width: 100%;
+
+          .content,
+          .actions {
+            align-items: center;
+            display: flex;
+            gap: 10px;
           }
 
-          h3 {
+          .content {
+            img {
+              max-width: 40px;
+            }
+          }
+
+          .actions {
+            .friend-request-action-button {
+              border: none;
+              border-radius: 4px;
+              color: #fff;
+              cursor: pointer;
+              font-size: 15px;
+              font-weight: bold;
+              padding: 8px 14px;
+
+              &.accept-friend-request-button {
+                background-color: #228b22;
+              }
+
+              &.decline-friend-request-button {
+                background-color: #ff5733;
+              }
+            }
           }
         }
+      }
+    }
+  }
 
-        .actions {
-          .add-user-button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
+  .users-list {
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 60px);
+    overflow-y: auto;
 
-            img {
-              margin-top: 3px;
+    &::-webkit-scrollbar {
+      width: 15px;
+    }
 
-              width: 100%;
+    &::-webkit-scrollbar-thumb {
+      background-color: #c4c4c2;
+      border-radius: 15px;
+      border: 1px solid #5c5e5e;
+    }
 
-              &.not-added-friend {
-                max-width: 20px;
-              }
+    li {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      @include mixins.flex-center;
+      gap: 12px;
+      justify-content: space-between;
+      padding: 10px;
+      width: 100%;
 
-              &.added-friend {
-                max-width: 35px;
-              }
+      .user-data {
+        align-items: center;
+        display: flex;
+        gap: 10px;
+
+        img {
+          max-width: 40px;
+        }
+      }
+
+      .actions {
+        .add-user-button {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+
+          img {
+            margin-top: 3px;
+
+            width: 100%;
+
+            &.not-added-friend {
+              max-width: 20px;
+            }
+
+            &.request-sent {
+              max-width: 22px;
+            }
+
+            &.added-friend {
+              max-width: 35px;
             }
           }
         }

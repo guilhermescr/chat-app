@@ -22,7 +22,7 @@
 
   <app-user-message
     *ngFor="let message of messages"
-    [isHostUserWhoSentTheMessage]="username === message.username"
+    [isHostUserWhoSentTheMessage]="user?.username === message.username"
     [messageData]="message"
   ></app-user-message>
 </section>
