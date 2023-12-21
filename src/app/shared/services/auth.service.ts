@@ -28,7 +28,7 @@ export class AuthService {
   usersRef: AngularFireList<User>;
 
   localUsername: string | null = localStorage.getItem('username');
-
+  // come back if anything goes wrong
   constructor(
     private router: Router,
     private fbDb: AngularFireDatabase,
@@ -39,49 +39,8 @@ export class AuthService {
     this.usersRef.snapshotChanges().subscribe((usersData) => {
       let usersList = usersData.map((userData) => {
         const userDataPayloadValue = userData.payload.val()!;
-        const hasFriendsArrayInUserData =
-          Object.keys(userDataPayloadValue).includes('friends');
 
-        if (!hasFriendsArrayInUserData) {
-          const userDataReturn = {
-            databaseKey: userData.key!,
-            ...userDataPayloadValue,
-            friends: {
-              friendsList: [],
-              sentRequests: [],
-              receivedRequests: [],
-            },
-          };
-
-          return userDataReturn;
-        } else {
-          const friendsProps = Object.keys(userDataPayloadValue.friends);
-
-          const hasFriendsListInUserData = friendsProps.includes('friendsList');
-          const hasSentRequestsInUserData =
-            friendsProps.includes('sentRequests');
-          const hasReceivedRequestsInUserData =
-            friendsProps.includes('receivedRequests');
-
-          let userDataReturn = {
-            databaseKey: userData.key!,
-            ...userDataPayloadValue,
-          };
-
-          if (!hasFriendsListInUserData) {
-            userDataReturn.friends.friendsList = [];
-          }
-
-          if (!hasSentRequestsInUserData) {
-            userDataReturn.friends.sentRequests = [];
-          }
-
-          if (!hasReceivedRequestsInUserData) {
-            userDataReturn.friends.receivedRequests = [];
-          }
-
-          return userDataReturn;
-        }
+        return this.formatFriendsFromUserData(userDataPayloadValue);
       });
 
       const localUser = usersList.find(
@@ -97,8 +56,58 @@ export class AuthService {
     });
   }
 
-  getUser(username: string): User {
-    return this.getUsers().find((user) => user.username === username)!;
+  formatFriendsFromUserData(userData: User): User {
+    const hasFriendsArrayInUserData = Object.keys(userData).includes('friends');
+
+    const formattedUser: User = (function () {
+      if (!hasFriendsArrayInUserData) {
+        const userDataReturn = {
+          databaseKey: userData.databaseKey,
+          ...userData,
+          friends: {
+            friendsList: [],
+            sentRequests: [],
+            receivedRequests: [],
+          },
+        };
+
+        return userDataReturn;
+      } else {
+        const friendsProps = Object.keys(userData.friends);
+
+        const hasFriendsListInUserData = friendsProps.includes('friendsList');
+        const hasSentRequestsInUserData = friendsProps.includes('sentRequests');
+        const hasReceivedRequestsInUserData =
+          friendsProps.includes('receivedRequests');
+
+        let userDataReturn = {
+          databaseKey: userData.databaseKey!,
+          ...userData,
+        };
+
+        if (!hasFriendsListInUserData) {
+          userDataReturn.friends.friendsList = [];
+        }
+
+        if (!hasSentRequestsInUserData) {
+          userDataReturn.friends.sentRequests = [];
+        }
+
+        if (!hasReceivedRequestsInUserData) {
+          userDataReturn.friends.receivedRequests = [];
+        }
+
+        return userDataReturn;
+      }
+    })();
+
+    return formattedUser;
+  }
+
+  getUserByKey(key: string): User {
+    return this.formatFriendsFromUserData(
+      this.getUsers().find((user) => user.databaseKey === key)!
+    );
   }
 
   getLocalUser(): User {
@@ -122,7 +131,12 @@ export class AuthService {
   }
 
   registerUser(user: User): void {
-    this.usersRef.push(user);
+    this.usersRef.push(user).then((ref) => {
+      this.fbDb.object<User>(`users/${ref.key}`).update({
+        databaseKey: ref.key!,
+        ...user,
+      });
+    });
     localStorage.setItem('username', user.username);
   }
 
@@ -154,9 +168,8 @@ export class AuthService {
   }
 
   isThisUserMyFriend(possibleFriend: User): boolean {
-    return !![].find((friend: any) => friend === possibleFriend.username);
-    // return !!this.userSubject.value?.friends?.find(
-    //   (friend: any) => friend === possibleFriend.username
-    // );
+    return this.getLocalUser().friends.friendsList.includes(
+      possibleFriend.databaseKey!
+    );
   }
 }

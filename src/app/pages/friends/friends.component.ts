@@ -11,6 +11,7 @@ import { User } from 'src/app/shared/models/user.model';
 export class FriendsComponent {
   users: User[] = [];
   localUser: User | null = null;
+  isFriendRequestsModalOpen: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -44,11 +45,17 @@ export class FriendsComponent {
     this.friendsService.sendFriendRequest(user);
   }
 
-  /*
-    friends: {
-      friendsList: [User{}],
-      sentRequests: [User{}],
-      receivedRequests: [User{}],
-    }
-  */
+  getPossibleFriends(possibleFriendsKeys: string[]): User[] {
+    return possibleFriendsKeys.map((possibleFriendKey) =>
+      this.authService.getUserByKey(possibleFriendKey)
+    );
+  }
+
+  openFriendRequestsModal(): void {
+    this.isFriendRequestsModalOpen = true;
+  }
+
+  closeFriendRequestsModal(): void {
+    this.isFriendRequestsModalOpen = false;
+  }
 }

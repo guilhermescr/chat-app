@@ -14,6 +14,9 @@ export class ChatListComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    // this.authService.localUser.subscribe((localUserData) => {
+    //   this.friends = localUserData?.friends.friendsList || [];
+    // });
     this.friends = this.authService
       .getUsers()
       .filter((user) => user.username !== localStorage.getItem('username'));

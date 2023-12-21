@@ -10,7 +10,7 @@ export interface User {
   password: string;
   usernameHeadingColor?: string;
   friends: {
-    friendsList: User[];
+    friendsList: string[];
     sentRequests: string[];
     receivedRequests: string[];
   };

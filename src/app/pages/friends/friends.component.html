@@ -1,5 +1,6 @@
 <header>
   <button
+    (click)="openFriendRequestsModal()"
     class="open-friend-requests-button"
     matBadge="{{ localUser?.friends?.receivedRequests?.length }}"
     matBadgePosition="after"
@@ -11,46 +12,13 @@
   </button>
 </header>
 
-<section class="friend-requests-modal">
-  <div class="background-overlay"></div>
-
-  <section class="friend-requests-container">
-    <mat-icon
-      class="close-friend-requests-modal-button"
-      aria-hidden="false"
-      aria-label="Close Icon"
-      fontIcon="close"
-    ></mat-icon>
-
-    <h2>Friend Requests</h2>
-
-    <ul class="friend-requests-list">
-      <li *ngFor="let possibleFriendId of localUser?.friends?.receivedRequests">
-        <div class="content">
-          <img
-            src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-            alt="User Avatar"
-          />
-
-          <h3>Test</h3>
-        </div>
-
-        <div class="actions">
-          <button
-            class="friend-request-action-button accept-friend-request-button"
-          >
-            Accept
-          </button>
-          <button
-            class="friend-request-action-button decline-friend-request-button"
-          >
-            Decline
-          </button>
-        </div>
-      </li>
-    </ul>
-  </section>
-</section>
+<app-friend-requests-modal
+  *ngIf="isFriendRequestsModalOpen"
+  [possibleFriendsList]="
+    getPossibleFriends(localUser?.friends?.receivedRequests!)
+  "
+  (closeFriendRequestsModalEvent)="closeFriendRequestsModal()"
+></app-friend-requests-modal>
 
 <ul class="users-list">
   <li *ngFor="let user of users">
@@ -74,231 +42,21 @@
 
         <ng-template #showAddOrAddedFriendIcon>
           <img
-            (click)="sendFriendRequest(user)"
-            class="not-added-friend"
-            src="../../../../assets/icons/add-user.svg"
-            alt="Add User Icon"
-            *ngIf="!checkIfUserIsMyFriend(user)"
-          />
-
-          <img
             class="added-friend"
             src="../../../../assets/icons/friend.svg"
             alt="Add User Icon"
-            *ngIf="checkIfUserIsMyFriend(user)"
+            *ngIf="checkIfUserIsMyFriend(user); else notMyFriend"
           />
+
+          <ng-template #notMyFriend>
+            <img
+              (click)="sendFriendRequest(user)"
+              class="not-added-friend"
+              src="../../../../assets/icons/add-user.svg"
+              alt="Add User Icon"
+            />
+          </ng-template>
         </ng-template>
-      </button>
-    </div>
-  </li>
-
-  <!-- Test below -->
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
-      </button>
-    </div>
-  </li>
-
-  <li>
-    <div class="user-data">
-      <img
-        src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
-        alt="User Avatar"
-      />
-
-      <h3>Test</h3>
-    </div>
-
-    <div class="actions">
-      <button class="add-user-button">
-        <img
-          class="not-added-friend"
-          src="../../../assets/icons/add-user.svg"
-          alt="Add User Icon"
-        />
       </button>
     </div>
   </li>

@@ -1,0 +1,52 @@
+<section class="friend-requests-modal">
+  <div class="background-overlay"></div>
+
+  <section class="friend-requests-container">
+    <mat-icon
+      (click)="fireCloseFriendRequestsModalEvent()"
+      class="close-friend-requests-modal-button"
+      aria-hidden="false"
+      aria-label="Close Icon"
+      fontIcon="close"
+      role="button"
+    ></mat-icon>
+
+    <h2>Friend Requests</h2>
+
+    <ul
+      class="friend-requests-list"
+      *ngIf="possibleFriendsList.length > 0; else nothingToSeeHere"
+    >
+      <li *ngFor="let possibleFriend of possibleFriendsList">
+        <div class="content">
+          <img
+            src="../../../assets/img/users/profile-pictures/default-user-avatar.png"
+            alt="User Avatar"
+          />
+
+          <h3>{{ possibleFriend?.username }}</h3>
+        </div>
+
+        <div class="actions">
+          <button
+            (click)="acceptFriendRequest(possibleFriend)"
+            class="friend-request-action-button accept-friend-request-button"
+          >
+            Accept
+          </button>
+
+          <button
+            (click)="declineFriendRequest(possibleFriend)"
+            class="friend-request-action-button decline-friend-request-button"
+          >
+            Decline
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <ng-template #nothingToSeeHere>
+      <h3 id="nothing-to-see-here-title">Nothing to see here...</h3>
+    </ng-template>
+  </section>
+</section>
