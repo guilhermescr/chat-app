@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { FriendsService } from '../../services/friends.service';
 
 @Component({
   selector: 'app-friend-requests-modal',
@@ -14,7 +15,8 @@ export class FriendRequestsModalComponent {
 
   constructor(
     private fbDb: AngularFireDatabase,
-    private authService: AuthService
+    private authService: AuthService,
+    private friendsService: FriendsService
   ) {}
 
   fireCloseFriendRequestsModalEvent(): void {
@@ -22,42 +24,7 @@ export class FriendRequestsModalComponent {
   }
 
   acceptFriendRequest(possibleFriend: User): void {
-    const localUser = this.authService.getLocalUser();
-
-    const possibleFriendObject = {
-      ...possibleFriend,
-      friends: {
-        friendsList: [
-          ...possibleFriend.friends.friendsList,
-          localUser.databaseKey!,
-        ],
-        sentRequests: possibleFriend.friends.sentRequests.filter(
-          (receivedRequestKey) => receivedRequestKey !== localUser.databaseKey
-        ),
-        receivedRequests: possibleFriend.friends.receivedRequests,
-      },
-    };
-    this.fbDb
-      .object<User>(`users/${possibleFriend.databaseKey!}`)
-      .update(possibleFriendObject);
-
-    const localUserObject = {
-      ...localUser,
-      friends: {
-        friendsList: [
-          ...localUser.friends.friendsList,
-          possibleFriend.databaseKey!,
-        ],
-        sentRequests: localUser.friends.sentRequests,
-        receivedRequests: localUser.friends.receivedRequests.filter(
-          (receivedRequestKey) =>
-            receivedRequestKey !== possibleFriend.databaseKey
-        ),
-      },
-    };
-    this.fbDb
-      .object<User>(`users/${localUser.databaseKey!}`)
-      .update(localUserObject);
+    this.friendsService.addFriend(possibleFriend);
   }
 
   declineFriendRequest(possibleFriend: User): void {}

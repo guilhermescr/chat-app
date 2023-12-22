@@ -41,8 +41,17 @@ export class FriendsComponent {
     );
   }
 
-  sendFriendRequest(user: User): void {
-    this.friendsService.sendFriendRequest(user);
+  sendFriendRequest(possibleFriend: User): void {
+    const hasPossibleFriendTriedToAddMe =
+      this.localUser?.friends.receivedRequests.includes(
+        possibleFriend.databaseKey!
+      );
+
+    if (hasPossibleFriendTriedToAddMe) {
+      this.friendsService.addFriend(possibleFriend);
+    } else {
+      this.friendsService.sendFriendRequest(possibleFriend);
+    }
   }
 
   getPossibleFriends(possibleFriendsKeys: string[]): User[] {

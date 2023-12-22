@@ -14,9 +14,17 @@ export class ChatListComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // this.authService.localUser.subscribe((localUserData) => {
-    //   this.friends = localUserData?.friends.friendsList || [];
-    // });
+    this.authService.users.subscribe(() => {
+      const localUserData = this.authService.getLocalUser();
+      const friendsList = localUserData?.friends.friendsList;
+
+      if (friendsList !== undefined) {
+        this.friends = friendsList.map((friendId) => {
+          return this.authService.getUserByKey(friendId);
+        });
+      }
+    });
+
     this.friends = this.authService
       .getUsers()
       .filter((user) => user.username !== localStorage.getItem('username'));

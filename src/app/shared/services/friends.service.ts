@@ -43,4 +43,47 @@ export class FriendsService {
       .object<User>(`users/${localUser.databaseKey!}`)
       .update(localUserObject);
   }
+
+  addFriend(possibleFriend: User): void {
+    const localUser = this.authService.getLocalUser();
+
+    const possibleFriendObject = {
+      ...possibleFriend,
+      friends: {
+        friendsList: [
+          ...possibleFriend.friends.friendsList,
+          localUser.databaseKey!,
+        ],
+        sentRequests: possibleFriend.friends.sentRequests.filter(
+          (sentRequestKey) => sentRequestKey !== localUser.databaseKey
+        ),
+        receivedRequests: possibleFriend.friends.receivedRequests.filter(
+          (receivedRequestKey) => receivedRequestKey !== localUser.databaseKey
+        ),
+      },
+    };
+    this.fbDb
+      .object<User>(`users/${possibleFriend.databaseKey!}`)
+      .update(possibleFriendObject);
+
+    const localUserObject = {
+      ...localUser,
+      friends: {
+        friendsList: [
+          ...localUser.friends.friendsList,
+          possibleFriend.databaseKey!,
+        ],
+        sentRequests: localUser.friends.sentRequests.filter(
+          (sentRequestKey) => sentRequestKey !== possibleFriend.databaseKey
+        ),
+        receivedRequests: localUser.friends.receivedRequests.filter(
+          (receivedRequestKey) =>
+            receivedRequestKey !== possibleFriend.databaseKey
+        ),
+      },
+    };
+    this.fbDb
+      .object<User>(`users/${localUser.databaseKey!}`)
+      .update(localUserObject);
+  }
 }

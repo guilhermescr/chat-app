@@ -105,9 +105,9 @@ export class AuthService {
   }
 
   getUserByKey(key: string): User {
-    return this.formatFriendsFromUserData(
-      this.getUsers().find((user) => user.databaseKey === key)!
-    );
+    const user = this.getUsers().find((user) => user.databaseKey === key)!;
+
+    return this.formatFriendsFromUserData(user);
   }
 
   getLocalUser(): User {
