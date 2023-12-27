@@ -86,4 +86,19 @@ export class FriendsService {
       .object<User>(`users/${localUser.databaseKey!}`)
       .update(localUserObject);
   }
+
+  deleteFriend(friend: User): void {
+    const localUser = this.authService.getLocalUser();
+
+    localUser.friends.friendsList = localUser.friends.friendsList.filter(
+      (friendId) => friendId !== friend.databaseKey
+    );
+
+    friend.friends.friendsList = friend.friends.friendsList.filter(
+      (friendId) => friendId !== localUser.databaseKey
+    );
+
+    this.authService.updateUser(localUser.databaseKey!, localUser);
+    this.authService.updateUser(friend.databaseKey!, friend);
+  }
 }

@@ -28,7 +28,7 @@ export class AuthService {
   usersRef: AngularFireList<User>;
 
   localUsername: string | null = localStorage.getItem('username');
-  // come back if anything goes wrong
+
   constructor(
     private router: Router,
     private fbDb: AngularFireDatabase,
@@ -116,6 +116,10 @@ export class AuthService {
 
   getUsers(): User[] {
     return this.usersSubject.value;
+  }
+
+  updateUser(userId: string, userData: User): void {
+    this.fbDb.object<User>(`users/${userId}`).update(userData);
   }
 
   checkIfUserIsRegisteredInDatabase(username: string): boolean {

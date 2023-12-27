@@ -54,6 +54,10 @@ export class FriendsComponent {
     }
   }
 
+  deleteFriend(friend: User): void {
+    this.friendsService.deleteFriend(friend);
+  }
+
   getPossibleFriends(possibleFriendsKeys: string[]): User[] {
     return possibleFriendsKeys.map((possibleFriendKey) =>
       this.authService.getUserByKey(possibleFriendKey)

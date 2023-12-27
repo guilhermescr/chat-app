@@ -71,17 +71,21 @@
       }
 
       .actions {
-        .add-user-button {
+        @include mixins.flex-center;
+        gap: 5px;
+        justify-content: space-between;
+
+        button {
           background-color: transparent;
           border: none;
-          cursor: pointer;
+        }
 
+        .add-user-button {
           img {
-            margin-top: 3px;
-
             width: 100%;
 
             &.not-added-friend {
+              cursor: pointer;
               max-width: 20px;
             }
 
@@ -91,6 +95,17 @@
 
             &.added-friend {
               max-width: 35px;
+            }
+          }
+        }
+
+        .delete-friend-button {
+          cursor: pointer;
+          width: 27px;
+
+          &:hover {
+            svg {
+              fill: #ff8a8a;
             }
           }
         }
